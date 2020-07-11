@@ -105,6 +105,9 @@ data "template_cloudinit_config" "example" {
         - [/dev/sdb1, /data, ext4, 'defaults,discard,nofail', '0', '2']
       runcmd:
         - sed -i '/vagrant insecure public key/d' /home/vagrant/.ssh/authorized_keys
+        # make sure the vagrant account is not expired.
+        # NB this is needed when the base image expires the vagrant account.
+        - usermod --expiredate '' vagrant
       EOF
   }
 }
