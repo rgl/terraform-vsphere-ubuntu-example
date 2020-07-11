@@ -23,7 +23,7 @@ choco install -y --version 0.23.0 govc
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
 
 ```bash
-cat >secrets.sh <<EOF
+cat >secrets.sh <<'EOF'
 export TF_VAR_vsphere_user='administrator@vsphere.local'
 export TF_VAR_vsphere_password='password'
 export TF_VAR_vsphere_server='vsphere.local'
@@ -51,8 +51,8 @@ govc about
 govc datacenter.info # list datacenters
 govc find # find all managed objects
 terraform init
-terraform plan
-time terraform apply -auto-approve
+terraform plan -out=tfplan
+time terraform apply tfplan
 ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output ip)"
 ssh "vagrant@$(terraform output ip)"
 time terraform destroy -force
