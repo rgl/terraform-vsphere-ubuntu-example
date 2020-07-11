@@ -2,18 +2,22 @@
 
 Install the [base ubuntu image](https://github.com/rgl/ubuntu-vagrant).
 
-Install Terraform (Ubuntu):
+Install Terraform and govc (Ubuntu):
 
 ```bash
-wget https://releases.hashicorp.com/terraform/0.12.10/terraform_0.12.10_linux_amd64.zip
-unzip terraform_0.12.10_linux_amd64.zip
-sudo cp terraform /usr/local/bin
+wget https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+unzip terraform_0.12.28_linux_amd64.zip
+sudo install terraform /usr/local/bin
+wget https://github.com/vmware/govmomi/releases/download/v0.23.0/govc_linux_amd64.gz
+gunzip govc_linux_amd64.gz
+sudo install govc_linux_amd64 /usr/local/bin/govc
 ```
 
-Install Terraform (Windows):
+Install Terraform and govc (Windows):
 
 ```bash
-choco install -y --version 0.12.10 terraform
+choco install -y --version 0.12.28 terraform
+choco install -y --version 0.23.0 govc
 ```
 
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
