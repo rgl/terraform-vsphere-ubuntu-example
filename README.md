@@ -5,19 +5,21 @@ Install the [Ubuntu 20.04 VM template](https://github.com/rgl/ubuntu-vagrant).
 Install Terraform and govc (Ubuntu):
 
 ```bash
-wget https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
-unzip terraform_0.12.28_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/1.0.2/terraform_1.0.2_linux_amd64.zip
+unzip terraform_1.0.2_linux_amd64.zip
 sudo install terraform /usr/local/bin
-wget https://github.com/vmware/govmomi/releases/download/v0.23.0/govc_linux_amd64.gz
-gunzip govc_linux_amd64.gz
-sudo install govc_linux_amd64 /usr/local/bin/govc
+rm terraform terraform_*_linux_amd64.zip
+wget https://github.com/vmware/govmomi/releases/download/v0.25.0/govc_Linux_x86_64.tar.gz
+tar xf govc_Linux_x86_64.tar.gz govc
+sudo install govc /usr/local/bin/govc
+rm govc govc_Linux_x86_64.tar.gz
 ```
 
 Install Terraform and govc (Windows):
 
 ```bash
-choco install -y --version 0.12.28 terraform
-choco install -y --version 0.23.0 govc
+choco install -y --version 1.0.2 terraform
+choco install -y --version 0.25.0 govc
 ```
 
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
@@ -53,7 +55,7 @@ govc find # find all managed objects
 terraform init
 terraform plan -out=tfplan
 time terraform apply tfplan
-ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output ip)"
-ssh "vagrant@$(terraform output ip)"
-time terraform destroy -force
+ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output --raw ip)"
+ssh "vagrant@$(terraform output --raw ip)"
+time terraform destroy --auto-approve
 ```

@@ -1,8 +1,23 @@
+# see https://github.com/hashicorp/terraform
 terraform {
-  required_version = ">= 0.12"
+  required_version = "1.0.2"
   required_providers {
-    template = "~> 2.1"
-    vsphere = "~> 1.21"
+    # see https://registry.terraform.io/providers/hashicorp/random
+    random = {
+      source = "hashicorp/random"
+      version = "3.1.0"
+    }
+    # see https://registry.terraform.io/providers/hashicorp/template
+    template = {
+      source = "hashicorp/template"
+      version = "2.2.0"
+    }
+    # see https://registry.terraform.io/providers/hashicorp/vsphere
+    # see https://github.com/hashicorp/terraform-provider-vsphere
+    vsphere = {
+      source = "hashicorp/vsphere"
+      version = "2.0.2"
+    }
   }
 }
 
@@ -12,6 +27,7 @@ variable "vsphere_user" {
 
 variable "vsphere_password" {
   default = "password"
+  sensitive = true
 }
 
 variable "vsphere_server" {
