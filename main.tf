@@ -50,6 +50,10 @@ variable "vsphere_datastore" {
   default = "Datastore"
 }
 
+variable "vsphere_folder" {
+  default = "example"
+}
+
 variable "vsphere_ubuntu_template" {
   default = "vagrant-templates/ubuntu-20.04-amd64-vsphere"
 }
@@ -132,8 +136,15 @@ data "template_cloudinit_config" "example" {
   }
 }
 
+resource "vsphere_folder" "folder" {
+  path = var.vsphere_folder
+  type = "vm"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
 # see https://www.terraform.io/docs/providers/vsphere/r/virtual_machine.html
 resource "vsphere_virtual_machine" "example" {
+  folder = vsphere_folder.folder.path
   name = var.prefix
   guest_id = data.vsphere_virtual_machine.ubuntu_template.guest_id
   num_cpus = 2
