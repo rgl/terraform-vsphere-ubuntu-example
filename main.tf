@@ -35,7 +35,7 @@ variable "vsphere_datastore" {
 }
 
 variable "vsphere_ubuntu_template" {
-  default = "vagrant-templates/ubuntu-18.04-amd64-vsphere"
+  default = "vagrant-templates/ubuntu-20.04-amd64-vsphere"
 }
 
 variable "prefix" {

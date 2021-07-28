@@ -1,6 +1,6 @@
-# Usage (Ubuntu 18.04)
+# Usage (Ubuntu 20.04 host)
 
-Install the [base ubuntu image](https://github.com/rgl/ubuntu-vagrant).
+Install the [Ubuntu 20.04 VM template](https://github.com/rgl/ubuntu-vagrant).
 
 Install Terraform and govc (Ubuntu):
 
@@ -31,7 +31,7 @@ export TF_VAR_vsphere_datacenter='Datacenter'
 export TF_VAR_vsphere_compute_cluster='Cluster'
 export TF_VAR_vsphere_datastore='Datastore'
 export TF_VAR_vsphere_network='VM Network'
-export TF_VAR_vsphere_ubuntu_template='vagrant-templates/ubuntu-18.04-amd64-vsphere'
+export TF_VAR_vsphere_ubuntu_template='vagrant-templates/ubuntu-20.04-amd64-vsphere'
 export GOVC_INSECURE='1'
 export GOVC_URL="https://$TF_VAR_vsphere_server/sdk"
 export GOVC_USERNAME="$TF_VAR_vsphere_user"
