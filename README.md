@@ -26,7 +26,12 @@ Save your environment details as a script that sets the terraform variables from
 
 ```bash
 cat >secrets.sh <<'EOF'
+export TF_VAR_vm_hostname_prefix='example'
 export TF_VAR_vm_count='1'
+export TF_VAR_vm_cpu='2'
+export TF_VAR_vm_memory='1' # [GiB]
+export TF_VAR_vm_disk_os_size='10' # [GiB]
+export TF_VAR_vm_disk_data_size='1' # [GiB]
 export TF_VAR_vsphere_user='administrator@vsphere.local'
 export TF_VAR_vsphere_password='password'
 export TF_VAR_vsphere_server='vsphere.local'
