@@ -21,6 +21,16 @@ terraform {
   }
 }
 
+variable "vm_count" {
+  description = "number of VMs to create"
+  type = number
+  default = 1
+  validation {
+    condition = var.vm_count >= 1
+    error_message = "Must be 1 or more."
+  }
+}
+
 variable "vsphere_user" {
   default = "administrator@vsphere.local"
 }
@@ -101,13 +111,14 @@ data "vsphere_virtual_machine" "ubuntu_template" {
 # see https://www.terraform.io/docs/providers/template/d/cloudinit_config.html
 # see https://www.terraform.io/docs/configuration/expressions.html#string-literals
 data "template_cloudinit_config" "example" {
+  count = var.vm_count
   gzip = true
   base64_encode = true
   part {
     content_type = "text/cloud-config"
     content = <<-EOF
       #cloud-config
-      hostname: example
+      hostname: example${count.index}
       users:
         - name: vagrant
           passwd: '$6$rounds=4096$NQ.EmIrGxn$rTvGsI3WIsix9TjWaDfKrt9tm3aa7SX7pzB.PSjbwtLbsplk1HsVzIrZbXwQNce6wmeJXhCq9YFJHDx9bXFHH.'
@@ -144,8 +155,9 @@ resource "vsphere_folder" "folder" {
 
 # see https://www.terraform.io/docs/providers/vsphere/r/virtual_machine.html
 resource "vsphere_virtual_machine" "example" {
+  count = var.vm_count
   folder = vsphere_folder.folder.path
-  name = var.prefix
+  name = "${var.prefix}${count.index}"
   guest_id = data.vsphere_virtual_machine.ubuntu_template.guest_id
   num_cpus = 2
   num_cores_per_socket = 2
@@ -178,7 +190,7 @@ resource "vsphere_virtual_machine" "example" {
   # NB this extra_config data ends-up inside the VM .vmx file and will be
   #    exposed by cloud-init-vmware-guestinfo as a cloud-init datasource.
   extra_config = {
-    "guestinfo.userdata" = data.template_cloudinit_config.example.rendered
+    "guestinfo.userdata" = data.template_cloudinit_config.example[count.index].rendered
     "guestinfo.userdata.encoding" = "gzip+base64"
   }
   provisioner "remote-exec" {
@@ -200,6 +212,6 @@ resource "vsphere_virtual_machine" "example" {
   }
 }
 
-output "ip" {
-  value = vsphere_virtual_machine.example.default_ip_address
+output "ips" {
+  value = vsphere_virtual_machine.example.*.default_ip_address
 }

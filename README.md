@@ -26,6 +26,7 @@ Save your environment details as a script that sets the terraform variables from
 
 ```bash
 cat >secrets.sh <<'EOF'
+export TF_VAR_vm_count='1'
 export TF_VAR_vsphere_user='administrator@vsphere.local'
 export TF_VAR_vsphere_password='password'
 export TF_VAR_vsphere_server='vsphere.local'
@@ -56,7 +57,7 @@ govc find # find all managed objects
 terraform init
 terraform plan -out=tfplan
 time terraform apply tfplan
-ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output --raw ip)"
-ssh "vagrant@$(terraform output --raw ip)"
+ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output --json ips | jq -r '.[0]')"
+ssh "vagrant@$(terraform output --json ips | jq -r '.[0]')"
 time terraform destroy --auto-approve
 ```
