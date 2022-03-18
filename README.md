@@ -9,7 +9,7 @@ wget https://releases.hashicorp.com/terraform/1.0.6/terraform_1.0.6_linux_amd64.
 unzip terraform_1.0.6_linux_amd64.zip
 sudo install terraform /usr/local/bin
 rm terraform terraform_*_linux_amd64.zip
-wget https://github.com/vmware/govmomi/releases/download/v0.26.1/govc_Linux_x86_64.tar.gz
+wget https://github.com/vmware/govmomi/releases/download/v0.27.4/govc_Linux_x86_64.tar.gz
 tar xf govc_Linux_x86_64.tar.gz govc
 sudo install govc /usr/local/bin/govc
 rm govc govc_Linux_x86_64.tar.gz
@@ -19,7 +19,7 @@ Install Terraform and govc (Windows):
 
 ```bash
 choco install -y --version 1.0.6 terraform
-choco install -y --version 0.26.1 govc
+choco install -y --version 0.27.4 govc
 ```
 
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
