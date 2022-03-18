@@ -203,6 +203,7 @@ resource "vsphere_virtual_machine" "example" {
   folder = vsphere_folder.folder.path
   name = "${var.prefix}${count.index}"
   guest_id = data.vsphere_virtual_machine.ubuntu_template.guest_id
+  firmware = data.vsphere_virtual_machine.ubuntu_template.firmware
   num_cpus = var.vm_cpu
   num_cores_per_socket = var.vm_cpu
   memory = var.vm_memory*1024
