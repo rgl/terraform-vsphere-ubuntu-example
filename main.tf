@@ -1,11 +1,11 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.0.6"
+  required_version = "1.1.7"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
     random = {
       source = "hashicorp/random"
-      version = "3.1.0"
+      version = "3.1.1"
     }
     # see https://registry.terraform.io/providers/hashicorp/template
     template = {
@@ -16,7 +16,7 @@ terraform {
     # see https://github.com/hashicorp/terraform-provider-vsphere
     vsphere = {
       source = "hashicorp/vsphere"
-      version = "2.0.2"
+      version = "2.1.1"
     }
   }
 }

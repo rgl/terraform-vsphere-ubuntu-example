@@ -5,8 +5,8 @@ Install the [Ubuntu 20.04 VM template](https://github.com/rgl/ubuntu-vagrant).
 Install Terraform and govc (Ubuntu):
 
 ```bash
-wget https://releases.hashicorp.com/terraform/1.0.6/terraform_1.0.6_linux_amd64.zip
-unzip terraform_1.0.6_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip
+unzip terraform_1.1.7_linux_amd64.zip
 sudo install terraform /usr/local/bin
 rm terraform terraform_*_linux_amd64.zip
 wget https://github.com/vmware/govmomi/releases/download/v0.27.4/govc_Linux_x86_64.tar.gz
@@ -18,7 +18,7 @@ rm govc govc_Linux_x86_64.tar.gz
 Install Terraform and govc (Windows):
 
 ```bash
-choco install -y --version 1.0.6 terraform
+choco install -y --version 1.1.7 terraform
 choco install -y --version 0.27.4 govc
 ```
 
