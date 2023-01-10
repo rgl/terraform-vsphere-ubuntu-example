@@ -64,5 +64,6 @@ terraform plan -out=tfplan
 time terraform apply tfplan
 ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output --json ips | jq -r '.[0]')"
 ssh "vagrant@$(terraform output --json ips | jq -r '.[0]')"
+exit
 time terraform destroy --auto-approve
 ```
