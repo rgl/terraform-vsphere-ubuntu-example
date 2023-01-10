@@ -109,7 +109,7 @@ variable "vsphere_folder" {
 }
 
 variable "vsphere_ubuntu_template" {
-  default = "vagrant-templates/ubuntu-20.04-amd64-vsphere"
+  default = "vagrant-templates/ubuntu-22.04-amd64-vsphere"
 }
 
 variable "prefix" {
