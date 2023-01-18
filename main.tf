@@ -207,6 +207,8 @@ resource "vsphere_virtual_machine" "example" {
   num_cpus = var.vm_cpu
   num_cores_per_socket = var.vm_cpu
   memory = var.vm_memory*1024
+  nested_hv_enabled = true
+  vvtd_enabled = true
   enable_disk_uuid = true # NB the VM must have disk.EnableUUID=1 for, e.g., k8s persistent storage.
   resource_pool_id = data.vsphere_compute_cluster.compute_cluster.resource_pool_id
   datastore_id = data.vsphere_datastore.datastore.id
