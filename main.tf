@@ -1,22 +1,24 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.3.7"
+  required_version = "1.14.3"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
+    # see https://github.com/hashicorp/terraform-provider-random
     random = {
       source  = "hashicorp/random"
-      version = "3.4.3"
+      version = "3.8.0"
     }
-    # see https://registry.terraform.io/providers/hashicorp/template
-    template = {
-      source  = "hashicorp/template"
-      version = "2.2.0"
+    # see https://registry.terraform.io/providers/hashicorp/cloudinit
+    # see https://github.com/hashicorp/terraform-provider-cloudinit
+    cloudinit = {
+      source = "hashicorp/cloudinit"
+      version = "2.3.7"
     }
-    # see https://registry.terraform.io/providers/hashicorp/vsphere
-    # see https://github.com/hashicorp/terraform-provider-vsphere
+    # see https://registry.terraform.io/providers/vmware/vsphere
+    # see https://github.com/vmware/terraform-provider-vsphere
     vsphere = {
-      source  = "hashicorp/vsphere"
-      version = "2.2.0"
+      source  = "vmware/vsphere"
+      version = "2.15.0"
     }
   }
 }
@@ -109,7 +111,7 @@ variable "vsphere_folder" {
 }
 
 variable "vsphere_ubuntu_template" {
-  default = "vagrant-templates/ubuntu-22.04-amd64-vsphere"
+  default = "vagrant-templates/ubuntu-24.04-amd64-vsphere"
 }
 
 variable "prefix" {
@@ -152,9 +154,9 @@ data "vsphere_virtual_machine" "ubuntu_template" {
 # see /run/cloud-init/*.log
 # see less /usr/share/doc/cloud-init/examples/cloud-config.txt.gz
 # see https://cloudinit.readthedocs.io/en/latest/topics/examples.html#disk-setup
-# see https://www.terraform.io/docs/providers/template/d/cloudinit_config.html
-# see https://www.terraform.io/docs/configuration/expressions.html#string-literals
-data "template_cloudinit_config" "example" {
+# see https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config.html
+# see https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings
+data "cloudinit_config" "example" {
   count = var.vm_count
   gzip = true
   base64_encode = true
@@ -237,7 +239,7 @@ resource "vsphere_virtual_machine" "example" {
   # NB this extra_config data ends-up inside the VM .vmx file and will be
   #    exposed by cloud-init-vmware-guestinfo as a cloud-init datasource.
   extra_config = {
-    "guestinfo.userdata" = data.template_cloudinit_config.example[count.index].rendered
+    "guestinfo.userdata" = data.cloudinit_config.example[count.index].rendered
     "guestinfo.userdata.encoding" = "gzip+base64"
   }
   provisioner "remote-exec" {

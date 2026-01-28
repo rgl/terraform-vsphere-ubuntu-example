@@ -1,15 +1,15 @@
-# Usage (Ubuntu 22.04 host)
+# Usage (Ubuntu 24.04 host)
 
-Install the [Ubuntu 22.04 VM template](https://github.com/rgl/ubuntu-vagrant).
+Install the [Ubuntu 24.04 VM template](https://github.com/rgl/ubuntu-vagrant).
 
 Install Terraform and govc (Ubuntu):
 
 ```bash
-wget https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_linux_amd64.zip
-unzip terraform_1.3.7_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_amd64.zip
+unzip terraform_1.14.3_linux_amd64.zip
 sudo install terraform /usr/local/bin
 rm terraform terraform_*_linux_amd64.zip
-wget https://github.com/vmware/govmomi/releases/download/v0.29.0/govc_Linux_x86_64.tar.gz
+wget https://github.com/vmware/govmomi/releases/download/v0.52.0/govc_Linux_x86_64.tar.gz
 tar xf govc_Linux_x86_64.tar.gz govc
 sudo install govc /usr/local/bin/govc
 rm govc govc_Linux_x86_64.tar.gz
@@ -18,8 +18,8 @@ rm govc govc_Linux_x86_64.tar.gz
 Install Terraform and govc (Windows):
 
 ```bash
-choco install -y --version 1.3.7 terraform
-choco install -y --version 0.29.0 govc
+choco install -y --version 1.14.3 terraform
+choco install -y --version 0.52.0 govc
 ```
 
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
@@ -40,7 +40,7 @@ export TF_VAR_vsphere_compute_cluster='Cluster'
 export TF_VAR_vsphere_datastore='Datastore'
 export TF_VAR_vsphere_network='VM Network'
 export TF_VAR_vsphere_folder='example'
-export TF_VAR_vsphere_ubuntu_template='vagrant-templates/ubuntu-22.04-amd64-vsphere'
+export TF_VAR_vsphere_ubuntu_template='vagrant-templates/ubuntu-24.04-amd64-vsphere'
 export GOVC_INSECURE='1'
 export GOVC_URL="https://$TF_VAR_vsphere_server/sdk"
 export GOVC_USERNAME="$TF_VAR_vsphere_user"
