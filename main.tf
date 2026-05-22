@@ -1,24 +1,24 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.14.3"
+  required_version = "1.15.4"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
     # see https://github.com/hashicorp/terraform-provider-random
     random = {
       source  = "hashicorp/random"
-      version = "3.8.0"
+      version = "3.9.0"
     }
     # see https://registry.terraform.io/providers/hashicorp/cloudinit
     # see https://github.com/hashicorp/terraform-provider-cloudinit
     cloudinit = {
       source  = "hashicorp/cloudinit"
-      version = "2.3.7"
+      version = "2.4.0"
     }
     # see https://registry.terraform.io/providers/vmware/vsphere
     # see https://github.com/vmware/terraform-provider-vsphere
     vsphere = {
       source  = "vmware/vsphere"
-      version = "2.15.0"
+      version = "2.16.0"
     }
   }
 }
@@ -169,7 +169,7 @@ data "cloudinit_config" "example" {
         - name: vagrant
           passwd: '$6$rounds=4096$NQ.EmIrGxn$rTvGsI3WIsix9TjWaDfKrt9tm3aa7SX7pzB.PSjbwtLbsplk1HsVzIrZbXwQNce6wmeJXhCq9YFJHDx9bXFHH.'
           lock_passwd: false
-          ssh-authorized-keys:
+          ssh_authorized_keys:
             - ${file("~/.ssh/id_rsa.pub")}
       disk_setup:
         /dev/sdb:
@@ -244,6 +244,9 @@ resource "vsphere_virtual_machine" "example" {
   }
   provisioner "remote-exec" {
     inline = [
+      "set -eux",
+      "sudo cloud-init status --long --wait",
+      "sudo cloud-init schema --system --annotate",
       "id",
       "uname -a",
       "cat /etc/os-release",

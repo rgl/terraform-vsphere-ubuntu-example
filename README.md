@@ -5,11 +5,11 @@ Install the [Ubuntu 24.04 VM template](https://github.com/rgl/ubuntu-vagrant).
 Install Terraform and govc (Ubuntu):
 
 ```bash
-wget https://releases.hashicorp.com/terraform/1.14.3/terraform_1.14.3_linux_amd64.zip
-unzip terraform_1.14.3_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/1.15.4/terraform_1.15.4_linux_amd64.zip
+unzip terraform_1.15.4_linux_amd64.zip
 sudo install terraform /usr/local/bin
 rm terraform terraform_*_linux_amd64.zip
-wget https://github.com/vmware/govmomi/releases/download/v0.52.0/govc_Linux_x86_64.tar.gz
+wget https://github.com/vmware/govmomi/releases/download/v0.54.0/govc_Linux_x86_64.tar.gz
 tar xf govc_Linux_x86_64.tar.gz govc
 sudo install govc /usr/local/bin/govc
 rm govc govc_Linux_x86_64.tar.gz
@@ -18,8 +18,8 @@ rm govc govc_Linux_x86_64.tar.gz
 Install Terraform and govc (Windows):
 
 ```bash
-choco install -y --version 1.14.3 terraform
-choco install -y --version 0.52.0 govc
+choco install -y --version 1.15.4 terraform
+choco install -y --version 0.54.0 govc
 ```
 
 Save your environment details as a script that sets the terraform variables from environment variables, e.g.:
@@ -64,6 +64,7 @@ terraform plan -out=tfplan
 time terraform apply tfplan
 ssh-keygen -f ~/.ssh/known_hosts -R "$(terraform output --json ips | jq -r '.[0]')"
 ssh "vagrant@$(terraform output --json ips | jq -r '.[0]')"
+sudo cloud-init schema --system --annotate
 exit
 time terraform destroy --auto-approve
 ```
