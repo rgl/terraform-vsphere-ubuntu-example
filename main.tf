@@ -153,7 +153,7 @@ data "vsphere_virtual_machine" "ubuntu_template" {
 # see journactl -u cloud-init
 # see /run/cloud-init/*.log
 # see less /usr/share/doc/cloud-init/examples/cloud-config.txt.gz
-# see https://cloudinit.readthedocs.io/en/latest/topics/examples.html#disk-setup
+# see https://docs.cloud-init.io/en/latest/reference/examples.html#disk-setup
 # see https://registry.terraform.io/providers/hashicorp/cloudinit/latest/docs/data-sources/config.html
 # see https://developer.hashicorp.com/terraform/language/expressions/strings#heredoc-strings
 data "cloudinit_config" "example" {
@@ -236,8 +236,14 @@ resource "vsphere_virtual_machine" "example" {
   clone {
     template_uuid = data.vsphere_virtual_machine.ubuntu_template.id
   }
-  # NB this extra_config data ends-up inside the VM .vmx file and will be
-  #    exposed by cloud-init-vmware-guestinfo as a cloud-init datasource.
+  # NB the guestinfo properties are used by the VMware cloud-init datasource.
+  # NB verify that these settings are visible in the guest with:
+  #     vmware-rpctool 'info-get guestinfo.vmtools.description'
+  #     vmware-rpctool 'info-get guestinfo.userdata' | base64 -d | zcat
+  #     vmware-rpctool 'info-get guestinfo.metadata' | base64 -d | zcat
+  # see https://docs.cloud-init.io/en/26.1/reference/datasources/vmware.html
+  # see https://github.com/canonical/cloud-init/blob/26.1/cloudinit/sources/DataSourceVMware.py
+  # see /usr/lib/python3/dist-packages/cloudinit/sources/DataSourceVMware.py
   extra_config = {
     "guestinfo.userdata"          = data.cloudinit_config.example[count.index].rendered
     "guestinfo.userdata.encoding" = "gzip+base64"
