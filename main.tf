@@ -167,7 +167,7 @@ data "cloudinit_config" "example" {
       hostname: ${var.vm_hostname_prefix}${count.index}
       users:
         - name: vagrant
-          passwd: '$6$rounds=4096$NQ.EmIrGxn$rTvGsI3WIsix9TjWaDfKrt9tm3aa7SX7pzB.PSjbwtLbsplk1HsVzIrZbXwQNce6wmeJXhCq9YFJHDx9bXFHH.'
+          plain_text_passwd: vagrant
           lock_passwd: false
           ssh_authorized_keys:
             - ${file("~/.ssh/id_rsa.pub")}
