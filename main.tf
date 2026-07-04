@@ -1,6 +1,6 @@
 # see https://github.com/hashicorp/terraform
 terraform {
-  required_version = "1.15.4"
+  required_version = "1.15.7"
   required_providers {
     # see https://registry.terraform.io/providers/hashicorp/random
     # see https://github.com/hashicorp/terraform-provider-random
@@ -18,7 +18,7 @@ terraform {
     # see https://github.com/vmware/terraform-provider-vsphere
     vsphere = {
       source  = "vmware/vsphere"
-      version = "2.16.0"
+      version = "2.16.1"
     }
   }
 }
@@ -111,7 +111,7 @@ variable "vsphere_folder" {
 }
 
 variable "vsphere_ubuntu_template" {
-  default = "vagrant-templates/ubuntu-24.04-amd64-vsphere"
+  default = "vagrant-templates/ubuntu-26.04-amd64-vsphere"
 }
 
 variable "prefix" {
